@@ -24,8 +24,9 @@ const Companies = () => {
 
   const createMutation = useMutation({
     mutationFn: api.createCompany,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["companies"] });
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["companies"] });
+      await queryClient.refetchQueries({ queryKey: ["companies"] });
       toast({ title: "Company created successfully" });
       setOpen(false);
     },
@@ -37,8 +38,9 @@ const Companies = () => {
   const updateMutation = useMutation({
     mutationFn: ({ id, data }: { id: number; data: Partial<Company> }) =>
       api.updateCompany(id, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["companies"] });
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["companies"] });
+      await queryClient.refetchQueries({ queryKey: ["companies"] });
       toast({ title: "Company updated successfully" });
       setOpen(false);
       setEditingCompany(null);
@@ -50,8 +52,9 @@ const Companies = () => {
 
   const deleteMutation = useMutation({
     mutationFn: api.deleteCompany,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["companies"] });
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["companies"] });
+      await queryClient.refetchQueries({ queryKey: ["companies"] });
       toast({ title: "Company deactivated successfully" });
     },
     onError: (error: Error) => {
