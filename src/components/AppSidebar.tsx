@@ -1,4 +1,4 @@
-import { Building2, Calendar, FileText, Home, Users, Sparkles } from "lucide-react";
+import { Building2, Calendar, FileText, Home, Users } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import {
   Sidebar,
@@ -21,28 +21,17 @@ const menuItems = [
 
 export function AppSidebar() {
   return (
-    <Sidebar className="border-r border-border bg-gradient-to-b from-card to-background">
-      <SidebarContent className="p-4">
-        <div className="px-4 py-6 mb-4">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center shadow-glow">
-              <Sparkles className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                KatiCRM
-              </h1>
-              <p className="text-xs text-muted-foreground">Ticket Management</p>
-            </div>
-          </div>
+    <Sidebar className="border-r border-sidebar-border">
+      <SidebarContent>
+        <div className="px-6 py-4">
+          <h1 className="text-xl font-bold text-sidebar-foreground">KatiCRM</h1>
+          <p className="text-xs text-sidebar-foreground/60">Ticket Management</p>
         </div>
         
         <SidebarGroup>
-          <SidebarGroupLabel className="px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-            Navigation
-          </SidebarGroupLabel>
-          <SidebarGroupContent className="px-2">
-            <SidebarMenu className="space-y-1">
+          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
@@ -50,21 +39,15 @@ export function AppSidebar() {
                       to={item.url}
                       end
                       className={({ isActive }) =>
-                        `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${
+                        `flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${
                           isActive
-                            ? "bg-gradient-primary text-white shadow-soft font-medium"
-                            : "text-foreground/70 hover:bg-accent hover:text-foreground hover:shadow-soft"
+                            ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                            : "text-sidebar-foreground/80 hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground"
                         }`
                       }
                     >
-                      {({ isActive }) => (
-                        <>
-                          <item.icon className={`h-5 w-5 transition-transform duration-200 ${
-                            isActive ? "scale-110" : "group-hover:scale-110"
-                          }`} />
-                          <span className="font-medium">{item.title}</span>
-                        </>
-                      )}
+                      <item.icon className="h-4 w-4" />
+                      <span>{item.title}</span>
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
