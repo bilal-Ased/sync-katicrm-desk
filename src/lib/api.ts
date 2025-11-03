@@ -1,4 +1,15 @@
-const API_BASE_URL = "http://127.0.0.1:8000";
+const getApiBaseUrl = () => {
+  return localStorage.getItem("api_url") || "http://127.0.0.1:8000";
+};
+
+const getAuthHeaders = () => {
+  const token = localStorage.getItem("api_bearer_token");
+  const headers: HeadersInit = { "Content-Type": "application/json" };
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+  return headers;
+};
 
 export interface Company {
   id: number;
@@ -64,28 +75,32 @@ export interface HealthStatus {
 export const api = {
   // Health
   getHealth: async (): Promise<HealthStatus> => {
-    const res = await fetch(`${API_BASE_URL}/health`);
+    const res = await fetch(`${getApiBaseUrl()}/health`);
     if (!res.ok) throw new Error("Failed to fetch health");
     return res.json();
   },
 
   // Companies
   getCompanies: async (active = true): Promise<Company[]> => {
-    const res = await fetch(`${API_BASE_URL}/companies?active=${active}`);
+    const res = await fetch(`${getApiBaseUrl()}/companies?active=${active}`, {
+      headers: getAuthHeaders(),
+    });
     if (!res.ok) throw new Error("Failed to fetch companies");
     return res.json();
   },
 
   getCompany: async (id: number): Promise<Company> => {
-    const res = await fetch(`${API_BASE_URL}/companies/${id}`);
+    const res = await fetch(`${getApiBaseUrl()}/companies/${id}`, {
+      headers: getAuthHeaders(),
+    });
     if (!res.ok) throw new Error("Failed to fetch company");
     return res.json();
   },
 
   createCompany: async (data: Omit<Company, "id" | "created_at" | "updated_at" | "is_active">): Promise<Company> => {
-    const res = await fetch(`${API_BASE_URL}/companies`, {
+    const res = await fetch(`${getApiBaseUrl()}/companies`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: getAuthHeaders(),
       body: JSON.stringify(data),
     });
     if (!res.ok) {
@@ -96,9 +111,9 @@ export const api = {
   },
 
   updateCompany: async (id: number, data: Partial<Company>): Promise<Company> => {
-    const res = await fetch(`${API_BASE_URL}/companies/${id}`, {
+    const res = await fetch(`${getApiBaseUrl()}/companies/${id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: getAuthHeaders(),
       body: JSON.stringify(data),
     });
     if (!res.ok) throw new Error("Failed to update company");
@@ -106,23 +121,26 @@ export const api = {
   },
 
   deleteCompany: async (id: number): Promise<void> => {
-    const res = await fetch(`${API_BASE_URL}/companies/${id}`, {
+    const res = await fetch(`${getApiBaseUrl()}/companies/${id}`, {
       method: "DELETE",
+      headers: getAuthHeaders(),
     });
     if (!res.ok) throw new Error("Failed to delete company");
   },
 
   // Users
   getCompanyUsers: async (companyId: number): Promise<CompanyUser[]> => {
-    const res = await fetch(`${API_BASE_URL}/companies/${companyId}/users`);
+    const res = await fetch(`${getApiBaseUrl()}/companies/${companyId}/users`, {
+      headers: getAuthHeaders(),
+    });
     if (!res.ok) throw new Error("Failed to fetch users");
     return res.json();
   },
 
   createUser: async (companyId: number, data: Omit<CompanyUser, "id" | "company_id" | "created_at" | "updated_at" | "is_active">): Promise<CompanyUser> => {
-    const res = await fetch(`${API_BASE_URL}/companies/${companyId}/users`, {
+    const res = await fetch(`${getApiBaseUrl()}/companies/${companyId}/users`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: getAuthHeaders(),
       body: JSON.stringify(data),
     });
     if (!res.ok) {
@@ -133,9 +151,9 @@ export const api = {
   },
 
   updateUser: async (companyId: number, userId: number, data: Partial<CompanyUser>): Promise<CompanyUser> => {
-    const res = await fetch(`${API_BASE_URL}/companies/${companyId}/users/${userId}`, {
+    const res = await fetch(`${getApiBaseUrl()}/companies/${companyId}/users/${userId}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: getAuthHeaders(),
       body: JSON.stringify(data),
     });
     if (!res.ok) throw new Error("Failed to update user");
@@ -143,23 +161,26 @@ export const api = {
   },
 
   deleteUser: async (companyId: number, userId: number): Promise<void> => {
-    const res = await fetch(`${API_BASE_URL}/companies/${companyId}/users/${userId}`, {
+    const res = await fetch(`${getApiBaseUrl()}/companies/${companyId}/users/${userId}`, {
       method: "DELETE",
+      headers: getAuthHeaders(),
     });
     if (!res.ok) throw new Error("Failed to delete user");
   },
 
   // Schedules
   getSchedules: async (companyId: number): Promise<ReportSchedule[]> => {
-    const res = await fetch(`${API_BASE_URL}/companies/${companyId}/schedules`);
+    const res = await fetch(`${getApiBaseUrl()}/companies/${companyId}/schedules`, {
+      headers: getAuthHeaders(),
+    });
     if (!res.ok) throw new Error("Failed to fetch schedules");
     return res.json();
   },
 
   createSchedule: async (companyId: number, data: Omit<ReportSchedule, "id" | "company_id" | "created_at" | "updated_at" | "last_run" | "run_count">): Promise<ReportSchedule> => {
-    const res = await fetch(`${API_BASE_URL}/companies/${companyId}/schedules`, {
+    const res = await fetch(`${getApiBaseUrl()}/companies/${companyId}/schedules`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: getAuthHeaders(),
       body: JSON.stringify(data),
     });
     if (!res.ok) {
@@ -170,9 +191,9 @@ export const api = {
   },
 
   updateSchedule: async (companyId: number, scheduleId: number, data: Partial<ReportSchedule>): Promise<ReportSchedule> => {
-    const res = await fetch(`${API_BASE_URL}/companies/${companyId}/schedules/${scheduleId}`, {
+    const res = await fetch(`${getApiBaseUrl()}/companies/${companyId}/schedules/${scheduleId}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: getAuthHeaders(),
       body: JSON.stringify(data),
     });
     if (!res.ok) throw new Error("Failed to update schedule");
@@ -180,15 +201,17 @@ export const api = {
   },
 
   deleteSchedule: async (companyId: number, scheduleId: number): Promise<void> => {
-    const res = await fetch(`${API_BASE_URL}/companies/${companyId}/schedules/${scheduleId}`, {
+    const res = await fetch(`${getApiBaseUrl()}/companies/${companyId}/schedules/${scheduleId}`, {
       method: "DELETE",
+      headers: getAuthHeaders(),
     });
     if (!res.ok) throw new Error("Failed to delete schedule");
   },
 
   triggerSchedule: async (companyId: number, scheduleId: number): Promise<void> => {
-    const res = await fetch(`${API_BASE_URL}/companies/${companyId}/schedules/${scheduleId}/run`, {
+    const res = await fetch(`${getApiBaseUrl()}/companies/${companyId}/schedules/${scheduleId}/run`, {
       method: "POST",
+      headers: getAuthHeaders(),
     });
     if (!res.ok) throw new Error("Failed to trigger schedule");
   },
@@ -200,9 +223,9 @@ export const api = {
     date_end?: string;
     email_to?: string;
   }): Promise<TicketRequest> => {
-    const res = await fetch(`${API_BASE_URL}/fetch-tickets`, {
+    const res = await fetch(`${getApiBaseUrl()}/fetch-tickets`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: getAuthHeaders(),
       body: JSON.stringify(data),
     });
     if (!res.ok) {

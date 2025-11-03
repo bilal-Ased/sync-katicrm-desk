@@ -1,4 +1,4 @@
-import { Building2, Calendar, FileText, Home, Users } from "lucide-react";
+import { Building2, Calendar, FileText, Home, Settings, Users } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import {
   Sidebar,
@@ -17,6 +17,7 @@ const menuItems = [
   { title: "Users", url: "/users", icon: Users },
   { title: "Schedules", url: "/schedules", icon: Calendar },
   { title: "Reports", url: "/reports", icon: FileText },
+  { title: "Settings", url: "/settings", icon: Settings },
 ];
 
 export function AppSidebar() {

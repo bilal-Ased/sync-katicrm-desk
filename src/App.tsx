@@ -11,6 +11,7 @@ import Companies from "./pages/Companies";
 import Users from "./pages/Users";
 import Schedules from "./pages/Schedules";
 import Reports from "./pages/Reports";
+import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import { LogOut, User } from "lucide-react";
@@ -86,6 +87,7 @@ const App = () => (
             <Route path="/users" element={<ProtectedRoute><Layout><Users /></Layout></ProtectedRoute>} />
             <Route path="/schedules" element={<ProtectedRoute><Layout><Schedules /></Layout></ProtectedRoute>} />
             <Route path="/reports" element={<ProtectedRoute><Layout><Reports /></Layout></ProtectedRoute>} />
+            <Route path="/settings" element={<ProtectedRoute><Layout><Settings /></Layout></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
