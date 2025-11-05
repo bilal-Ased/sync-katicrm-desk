@@ -112,31 +112,31 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="space-y-8 pb-8">
+    <div className="space-y-8 pb-8 animate-fade-in-up">
       {/* Hero Section */}
-      <div className="relative overflow-hidden rounded-2xl border border-border/50 bg-gradient-to-br from-card via-card to-primary/5 p-12 shadow-lg">
+      <div className="relative overflow-hidden rounded-2xl border border-border/50 bg-gradient-to-br from-card via-card to-primary/5 p-12 shadow-lg backdrop-blur-sm">
         <div className="relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-6 backdrop-blur-sm">
-            <Sparkles className="h-4 w-4 text-primary" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-6 backdrop-blur-sm hover:bg-primary/15 transition-all">
+            <Sparkles className="h-4 w-4 text-primary animate-pulse" />
             <span className="text-sm font-semibold text-primary">Dashboard Overview</span>
           </div>
           
-          <h1 className="text-6xl font-bold mb-4 bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent tracking-tight">
+          <h1 className="text-6xl font-bold mb-5 bg-gradient-to-br from-foreground via-foreground to-foreground/60 bg-clip-text text-transparent tracking-tight leading-tight">
             Welcome Back
           </h1>
-          <p className="text-muted-foreground text-xl max-w-2xl leading-relaxed font-light">
+          <p className="text-muted-foreground text-xl max-w-2xl leading-relaxed">
             Your KatiCRM command center. Monitor companies, generate reports, and automate workflows with ease.
           </p>
           
           <div className="flex flex-wrap gap-4 mt-10">
             <Link to="/reports">
-              <Button size="lg" className="h-12 px-6">
+              <Button size="lg" className="h-12 px-7 text-[15px] font-semibold shadow-md hover:shadow-lg">
                 <FileText className="mr-2 h-5 w-5" />
                 Generate Report
               </Button>
             </Link>
             <Link to="/companies">
-              <Button size="lg" variant="outline" className="h-12 px-6">
+              <Button size="lg" variant="outline" className="h-12 px-7 text-[15px] font-semibold">
                 <Building2 className="mr-2 h-5 w-5" />
                 View Companies
               </Button>
