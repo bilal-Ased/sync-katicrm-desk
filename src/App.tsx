@@ -35,19 +35,19 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <div className="min-h-screen flex w-full bg-background">
         <AppSidebar />
         <div className="flex-1 flex flex-col">
-          <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b border-border/50 bg-card/50 backdrop-blur-xl px-6 shadow-soft">
-            <SidebarTrigger />
+          <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b border-border/40 bg-card/80 backdrop-blur-xl px-6 shadow-sm">
+            <SidebarTrigger className="hover:bg-muted/80" />
             <div className="flex-1" />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-full">
+                <Button variant="ghost" size="icon" className="rounded-full hover:bg-muted/80">
                   <User className="w-5 h-5" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuContent align="end" className="w-56 shadow-lg">
                 <DropdownMenuLabel>
                   <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium">Account</p>
+                    <p className="text-sm font-semibold">Account</p>
                     <p className="text-xs text-muted-foreground">{user?.email}</p>
                   </div>
                 </DropdownMenuLabel>
@@ -59,7 +59,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               </DropdownMenuContent>
             </DropdownMenu>
           </header>
-          <main className="flex-1 p-6 bg-gradient-to-br from-background via-background to-background/95">
+          <main className="flex-1 p-8 bg-gradient-to-br from-background via-background to-muted/20">
             {children}
           </main>
         </div>
